@@ -3,3 +3,5 @@ A python application to scrap some data of PACKT editor daily free book using Be
 
 
 https://www.packtpub.com/packt/offers/free-learning/
+
+Book cover saved as 'book_cover.jpg'
