@@ -2,34 +2,34 @@
 # -*- coding utf-8 -*-
 # vim: set fileencoding=utg8 :
 
-import urllib
-import urllib2
+from urllib.request import urlretrieve
+from urllib.request import urlopen
 import bs4
 
 
 class Client(object):
 
 
-    def print_book(self, title, description, points):
-
-        print 'Title: ' + title.strip()
-        print 'Description: ' + description.strip()
-        
+    def print_book(self, title, description, points, web_url, output = "book_info.txt"):
+        print (title.strip(), file=open(output,"w"))
+        print (description.strip(), file=open(output,"a"))
         points = points.strip()
         if points:
             for point in points.split('\n'):
-                print '\t* ' +  point
+                print ('\t* ' +  point , file=open(output,"a"))
+        print (web_url, file=open(output,"a"))
 
     def get_web(self, url):
-        f = urllib2.urlopen(url)
+        f = urlopen(url)
         html = f.read()
         f.close()
         return html
 
     def run(self):
 
+        web_url = "https://www.packtpub.com/packt/offers/free-learning/"
         # download the web page
-        html = self.get_web("https://www.packtpub.com/packt/offers/free-learning/")
+        html = self.get_web(web_url)
 
         # parse it
         soup = bs4.BeautifulSoup(html, "lxml")
@@ -42,8 +42,9 @@ class Client(object):
         book_image_html = soup.find("img","bookimage imagecache imagecache-dotd_main_image")
 
         # download the cover if there is one
+
         if book_image_html:
-            urllib.urlretrieve('https:' + book_image_html['src'], "book_cover.jpg")
+            urlretrieve('http:' + book_image_html['src'].replace(" ", "%20"), "book_cover.jpg")
 
         # search for the description of the book
         # which is in the same parent of the title in the 7th div
@@ -57,8 +58,7 @@ class Client(object):
                 points =  sibling.text
 
         # print results
-        self.print_book(title,description, points)
-
+        self.print_book(title,description, points, web_url)
 
 
 if __name__ == '__main__':
