@@ -107,5 +107,5 @@ venv.bak/
 *.priv
 
 # temp files
-*.txt
-*.png
+book_info.txt
+book_cover.png
