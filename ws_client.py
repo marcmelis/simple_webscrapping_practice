@@ -1,4 +1,4 @@
-#!/Applications/djangostack-1.11.10-0/python/bin/python
+#!/usr/bin/python3
 # -*- coding utf-8 -*-
 # vim: set fileencoding=utg8 :
 
