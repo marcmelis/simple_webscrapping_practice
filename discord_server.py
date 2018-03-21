@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import discord
 import random
@@ -21,6 +21,7 @@ async def on_message(message):
 
     # book command
     if message.content.startswith('!book'):
+        print ("Called by " + message.author)
         await bot_client.send_message(message.channel, 'The daily book today is:')
         web_scrapping_client = Client()
         web_scrapping_client.run()
